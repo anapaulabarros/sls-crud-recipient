@@ -1,0 +1,14 @@
+# package directories
+node_modules
+.build
+.serverless
+jspm_packages
+
+
+#serverless directories
+.serverless
+coverage
+
+.eslintcache
+
+.webpack/**

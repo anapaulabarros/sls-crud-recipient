@@ -1,0 +1,40 @@
+{
+  "Items": [
+    {
+      "recipient_id": "96c81841-c673-4bc9-841b-956b40fc321f",
+      "name_recipient": "Ana Paula Barros",
+      "cnpj_cpf": "230.822.130-57",
+      "bank": "655 - Banco Votarantim",
+      "agencyId": "1111",
+      "accontId": "622623242111-2",
+      "type": "CURRENT",
+      "status": true,
+      "created_at": "2021-11-12",
+      "updated_at": "2021-11-12"
+    },
+    {
+      "recipient_id": "5d3f17ff-de6a-406e-ae37-2428c3a825ad",
+      "name_recipient": "Carlos Hernamez",
+      "cnpj_cpf": "70.040.124/0001-86",
+      "bank": "123 - Banco do Brasil",
+      "agencyId": "1111",
+      "accontId": "10279-2",
+      "type": "CURRENT",
+      "status": true,
+      "created_at": "2021-01-25",
+      "updated_at": "2021-01-25"
+    },
+    {
+      "recipient_id": "7870fe60-15fe-4f00-985a-0c3212a4127e",
+      "name_recipient": "Martha Gozalo",
+      "cnpj_cpf": "22.865.968/0001-13",
+      "bank": "101 - Banco Itaú",
+      "agencyId": "1209",
+      "accontId": "20594",
+      "type": "CURRENT",
+      "status": true,
+      "created_at": "2020-10-17",
+      "updated_at": "2020-10-17"
+    }
+  ]
+}
