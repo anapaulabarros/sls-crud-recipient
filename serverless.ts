@@ -52,7 +52,7 @@ const serverlessConfiguration: AWS = {
     environment: {
       STAGE: "${opt:stage, 'dev'}",
       RECIPIENTS_TABLE: 'RECIPIENTS',
-      REGION: ${self:provider.region},
+      REGION: "${self:provider.region}",
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
     },
     iamRoleStatements: [
