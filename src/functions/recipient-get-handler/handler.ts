@@ -3,52 +3,39 @@ import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 
 import schema from './schema';
-import * as AWS from 'aws-sdk';
+import { RecipientDynamoRepository } from '../../infra/repositories/recipient-dynamo-repository';
+import { ValidatorEmptyFields } from '../../utils/ValidatorEmptyField';
+import { FormatResponse } from '../../utils/FormatResponse';
 
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+// instance
+const recipientRepository = new RecipientDynamoRepository();
+const validatorEmptyFields = new ValidatorEmptyFields();
+const formatResponse = new FormatResponse();
 
 const recipientGetHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
 
   try {
 
-    if(!event.pathParameters.cnpj_cpf) {
-      return formatJSONResponse({
-        statusCode: 403,
-        body: "The param cnpj_cpf don't be empty"
-      });
-    }
+    validatorEmptyFields.validator(event.pathParameters.cnpj_cpf);
 
-    const data = await dynamoDb.get({
-      TableName: 'RECIPENTS',
-      Key: {
-        cnpj_cpf: event.pathParameters.cnpj_cpf
-      }
-    })
-    .promise();
+    const data = await recipientRepository.findById(event.pathParameters.cnpj_cpf);
 
-
-    if(!data.Item) {
+    if(Object.keys(data).length === 0) {
       return formatJSONResponse({
         statusCode: 404,
         body: "Data doesn’t exists"
-      });
-    }
+      })
+    } 
 
     return formatJSONResponse({
       statusCode: 200,
       body: data.Item
     });
-
     
   } catch (err) {
     console.log("Error find data: ", err);
-    return formatJSONResponse({
-      statusCode: err.statusCode ? err.statusCode : 500,
-      body: JSON.stringify({
-        error: err.name ? err.name : "Exception",
-        message: err.message ? err.message : "Unknow error"
-      })
-    }) 
+    formatResponse.formatResponseError(500,err); 
   }
 
 }

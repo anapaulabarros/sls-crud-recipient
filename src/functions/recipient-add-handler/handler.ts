@@ -1,43 +1,26 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
-import { v4 as uuidv4 } from 'uuid';
 
 import schema from './schema';
-import * as AWS from 'aws-sdk';
 
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
+import { RecipientDynamoRepository } from '../../infra/repositories/recipient-dynamo-repository';
+import { ValidatorEmptyFields } from '../../utils/ValidatorEmptyField';
+import { FormatResponse } from '../../utils/FormatResponse';
 
-const recipientAddHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+
+const recipientRepository = new RecipientDynamoRepository();
+const formatResponse = new FormatResponse();
+const validatorEmptyFields = new ValidatorEmptyFields();
+
+const recipientAddHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event: any) => {
   
   
   try {
     
-    const timestamp = new Date().getTime();
+    validatorEmptyFields.validator(event.body);
 
-    if(!event.body) {
-      throw new Error('The body is empty');
-    }
-
-    const newRecipient = {
-      recipient_id: uuidv4(),
-      name_recipient: event.body.name_recipient,
-      cnpj_cpf: event.body.cnpj_cpf,
-      accountId: event.body.accountId,
-      type: event.body.type,
-      agencyId: event.body.agencyId,
-      bank: event.body.bank,
-      status: true,
-      created_at: timestamp,
-      updated_at: timestamp
-    };
-
-    const itemsPut = {
-      TableName: 'RECIPENTS',
-      Item: newRecipient
-    };
-
-    await dynamoDb.put(itemsPut).promise();
+    await recipientRepository.add(event.body);
 
     return formatJSONResponse({
       statusCode: 201,
@@ -48,13 +31,7 @@ const recipientAddHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = a
 
   } catch (err) {
     console.log("Error add data: ", err);
-    return formatJSONResponse({
-      statusCode: err.statusCode ? err.statusCode : 500,
-      body: JSON.stringify({
-        error: err.name ? err.name : "Exception",
-        message: err.message ? err.message : "Unknow error"
-      })
-    }) 
+    formatResponse.formatResponseError(500, err);
   }
 
 }
