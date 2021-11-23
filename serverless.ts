@@ -5,6 +5,7 @@ import recipientGettHandler from '@functions/recipient-get-handler';
 import recipientAddtHandler from '@functions/recipient-add-handler';
 import recipientUpdatetHandler from '@functions/recipient-update-handler';
 import recipientRemoveHandler from '@functions/recipient-remove-handler';
+import recipientReportHandler from '@functions/recipient-report-handler';
 
 const serverlessConfiguration: AWS = {
   service: 'recipient-service',
@@ -78,7 +79,8 @@ const serverlessConfiguration: AWS = {
     recipientGettHandler, 
     recipientAddtHandler, 
     recipientUpdatetHandler,
-    recipientRemoveHandler 
+    recipientRemoveHandler,
+    recipientReportHandler 
   },
 };
 
