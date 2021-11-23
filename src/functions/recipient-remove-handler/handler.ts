@@ -4,35 +4,20 @@ import { middyfy } from '@libs/lambda';
 
 import schema from './schema';
 
-import { RecipientDynamoRepository } from '../../infra/repositories/recipient-dynamo-repository';
-import { ValidatorEmptyFields } from '../../utils/ValidatorEmptyField';
-import { FormatResponse } from '../../utils/FormatResponse';
 
-
-const recipientRepository = new RecipientDynamoRepository();
-const formatResponse = new FormatResponse();
-const validatorEmptyFields = new ValidatorEmptyFields();
+import { RecipientsController } from '../../infra/controllers/RecipientsController';
+const recipientsController = new RecipientsController();
 
 const recipientRemoveHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
 
-  try {
+  await recipientsController.removeRecipient(event.pathParameters.cnpj_cpf);
 
-    validatorEmptyFields.validator(event.pathParameters.cnpj_cpf);
-    
-    recipientRepository.remove(event.pathParameters.cnpj_cpf);
-
-    return formatJSONResponse({
-      statusCode: 204,
-      body: {
-        message: "Item removed with Successful"
-      }
-    });
-
-    
-  } catch (err) {
-    console.log("Error delete data: ", err);
-    formatResponse.formatResponseError(500, err); 
-  }
+  return formatJSONResponse({
+    statusCode: 204,
+    body: {
+      message: "Item removed with Successful"
+    }
+  });
 
 }
 

@@ -4,31 +4,17 @@ import { middyfy } from '@libs/lambda';
 
 import schema from './schema';
 
-import { RecipientDynamoRepository } from '../../infra/repositories/recipient-dynamo-repository';
-import { ValidatorEmptyFields } from '../../utils/ValidatorEmptyField';
-import { FormatResponse } from '../../utils/FormatResponse';
+import { RecipientsController } from '../../infra/controllers/RecipientsController';
 
-
-const recipientRepository = new RecipientDynamoRepository();
-const formatResponse = new FormatResponse();
-const validatorEmptyFields = new ValidatorEmptyFields();
+const recipientsController = new RecipientsController();
 
 const recipientUpdateHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event: any) => {
+  
+  await recipientsController.updateRecipient(event.pathParameters.cnpj_cpf, event.body);
 
-  try {
-
-    validatorEmptyFields.validator(event.pathParameters.cnpj_cpf);
-    await recipientRepository.update(event.pathParameters.cnpj_cpf, event.body);
-
-    return formatJSONResponse({
-      statusCode: 204
-    });
-
-    
-  } catch (err) {
-    console.log("Error uodate data: ", err);
-    formatResponse.formatResponseError(500, err);
-  }
+  return formatJSONResponse({
+    statusCode: 204
+  });
 
 }
 

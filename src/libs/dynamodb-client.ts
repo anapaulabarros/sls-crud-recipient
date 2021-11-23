@@ -33,7 +33,8 @@ export abstract class DynamoDBRepository {
         Key: {
           cnpj_cpf: id
         }
-      }).promise()
+      }).promise();
+
       return response;
 
     } catch (error) {

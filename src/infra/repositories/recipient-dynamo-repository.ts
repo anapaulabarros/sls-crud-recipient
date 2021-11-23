@@ -8,7 +8,7 @@ export class RecipientDynamoRepository extends DynamoDBRepository {
     super("RECIPENTS");
   }
 
-  async findAll(): Promise<any> {
+  async findAll(): Promise<Array<Recipients>> {
     const result = await this.scanPage();
     return result;
   }
