@@ -1,8 +1,8 @@
 import type { AWS } from '@serverless/typescript';
 
 import recipientListHandler from '@functions/recipient-list-handler';
-import recipientGettHandler from '@functions/recipient-get-handler';
-import recipientAddtHandler from '@functions/recipient-add-handler';
+import recipientGetHandler from '@functions/recipient-get-handler';
+import recipientAddHandler from '@functions/recipient-add-handler';
 import recipientUpdatetHandler from '@functions/recipient-update-handler';
 import recipientRemoveHandler from '@functions/recipient-remove-handler';
 import recipientReportHandler from '@functions/recipient-report-handler';
@@ -76,8 +76,8 @@ const serverlessConfiguration: AWS = {
   },
   functions: { 
     recipientListHandler, 
-    recipientGettHandler, 
-    recipientAddtHandler, 
+    recipientGetHandler, 
+    recipientAddHandler, 
     recipientUpdatetHandler,
     recipientRemoveHandler,
     recipientReportHandler 
