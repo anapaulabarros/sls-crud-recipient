@@ -1,11 +1,10 @@
 import type { AWS } from '@serverless/typescript';
 
-import recipientListHandler from '@functions/recipient-list-handler';
-import recipientGetHandler from '@functions/recipient-get-handler';
-import recipientAddHandler from '@functions/recipient-add-handler';
-import recipientUpdateHandler from '@functions/recipient-update-handler';
-import recipientRemoveHandler from '@functions/recipient-remove-handler';
-import recipientReportHandler from '@functions/recipient-report-handler';
+import listAllFavorecidoHandler from '@functions/list-all-favorecido-handler';
+import getFavorecidoHandler from '@functions/get-favorecido-handler';
+import removeFornecedorHandler from '@functions/remove-fornecedor-handler';
+import registerFavorecidoHandler from '@functions/register-favorecido-handler';
+import updateFavorecidoHandler from '@functions/update-favorecido-handler';
 
 const serverlessConfiguration: AWS = {
   service: 'recipient-service',
@@ -75,12 +74,11 @@ const serverlessConfiguration: AWS = {
     lambdaHashingVersion: '20201221',
   },
   functions: { 
-    recipientListHandler, 
-    recipientGetHandler, 
-    recipientAddHandler, 
-    recipientUpdateHandler,
-    recipientRemoveHandler,
-    recipientReportHandler 
+    listAllFavorecidoHandler,
+    getFavorecidoHandler,
+    removeFornecedorHandler,
+    registerFavorecidoHandler,
+    updateFavorecidoHandler
   },
 };
 

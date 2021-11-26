@@ -7,7 +7,7 @@ export default {
     {
       http: {
         method: 'put',
-        path: 'recipients/{cnpj_cpf}',
+        path: 'favorecido/{cnpj_cpf}',
         request: {
           schemas: {
             'application/json': schema

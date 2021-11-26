@@ -6,8 +6,8 @@ export default {
   events: [
     {
       http: {
-        method: 'post',
-        path: 'recipients',
+        method: 'get',
+        path: 'favorecido/{cnpj_cpf}',
         request: {
           schemas: {
             'application/json': schema

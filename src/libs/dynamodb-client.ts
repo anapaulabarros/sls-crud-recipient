@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import { Recipients } from '../model/Recipients';
 import { v4 as uuidv4 } from 'uuid';
+import { Favorecido } from '../../src/domains/favorecidos/entities/favorecido';
 
 export abstract class DynamoDBRepository {
 
@@ -57,7 +57,7 @@ export abstract class DynamoDBRepository {
     }
   }
 
-  async updateItem(id: string, data: Recipients): Promise<any | undefined> {
+  async updateItem(id: string, data: Favorecido): Promise<any | undefined> {
     try {
       const timestamp = new Date().getTime();
       await this.ddb
@@ -67,12 +67,11 @@ export abstract class DynamoDBRepository {
             cnpj_cpf: id
           },
           UpdateExpression:
-            'SET name_recipient = :name_recipient, accountId = :accountId,' 
+            'SET accountId = :accountId,' 
             + ' agencyId = :agencyId, updated_at = :updated_at,'
             + ' type = :type',
           ConditionExpression: 'attribute_exists(cnpj_cpf)',
           ExpressionAttributeValues: {
-            ':name_recipient': data.name_recipient,
             ':agencyId': data.agencyId,
             ':accountId': data.accountId,
             ':type': data.type,
@@ -86,7 +85,7 @@ export abstract class DynamoDBRepository {
     }
   }
 
-  async addItem(data: Recipients): Promise<any> {
+  async addItem(data: Favorecido): Promise<any> {
     try {
       const timestamp = new Date().getTime();
 

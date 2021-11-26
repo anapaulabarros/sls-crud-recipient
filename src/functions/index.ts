@@ -1,2 +1,2 @@
-export { default as recipientListHandler } from './recipient-list-handler';
-export { default as recipientGetHandler } from './recipient-get-handler';
+export { default as recipientListHandler } from './list-all-Favorecido-handler';
+export { default as recipientGetHandler } from './get-Favorecido-handler';

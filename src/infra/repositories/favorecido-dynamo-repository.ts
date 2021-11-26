@@ -1,16 +1,16 @@
-import { Recipients } from 'src/model/Recipients';
+import { Favorecido } from '../../domains/favorecidos/entities/favorecido';
 import { DynamoDBRepository } from '../../libs/dynamodb-client';
 
 
-export class RecipientDynamoRepository extends DynamoDBRepository {
+export class FavorecidoDynamoRepository extends DynamoDBRepository {
 
   constructor() {
     super("RECIPENTS");
   }
 
-  async findAll(): Promise<Array<Recipients>> {
+  async findAll(): Promise<Array<Favorecido>> {
     const result = await this.scanPage();
-    return result;
+    return result.Items;
   }
 
   async findById(id: string): Promise<any> {
@@ -22,12 +22,12 @@ export class RecipientDynamoRepository extends DynamoDBRepository {
     await this.removeItem(id);
   }
 
-  async update(id: string, data: Recipients): Promise<any> {
+  async update(id: string, data: Favorecido): Promise<any> {
     await this.updateItem(id, data);
   }
 
 
-  async add(data: Recipients): Promise<any | undefined> {
+  async register(data: Favorecido): Promise<any | undefined> {
     await this.addItem(data);
   }
 }
